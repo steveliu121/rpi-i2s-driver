@@ -1,0 +1,9 @@
+#!/bin/sh
+
+modprobe i2c-bcm2835
+sleep 1
+modprobe snd-soc-rt5677
+sleep 1
+modprobe snd-soc-bcm2835-i2s
+sleep 1
+modprobe snd-soc-rpi-rt5679-machine
