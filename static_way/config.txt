@@ -21,4 +21,4 @@ gpu_mem_1024=100
 
 # fixes rpi3 ttyAMA0 serial console
 dtoverlay=pi3-miniuart-bt
-dtoverlay=rpi-rt5679-machine
+dtoverlay=rpi-rt5677-machine

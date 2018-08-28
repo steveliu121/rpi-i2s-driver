@@ -51,20 +51,20 @@ echo "set kernel moduels"
 echo "------------------------------------------------------"
 grep -q "snd-soc-rt5677" /etc/modules || \
 	echo "snd-soc-rt5677" >> /etc/modules
-grep -q "snd-soc-rpi-rt5679-machine" /etc/modules || \
-	echo "snd-soc-rpi-rt5679-machine" >> /etc/modules
+grep -q "snd-soc-rpi-rt5677-machine" /etc/modules || \
+	echo "snd-soc-rpi-rt5677-machine" >> /etc/modules
 
 echo "------------------------------------------------------"
 echo "install dtbos"
 echo "------------------------------------------------------"
-cp $DTB_SRC/rpi-rt5679-machine.dtbo /boot/overlays
+cp $DTB_SRC/rpi-rt5677-machine.dtbo /boot/overlays
 
 echo "------------------------------------------------------"
 echo "set dtoverlays"
 echo "------------------------------------------------------"
 sed -i 's/#dtparam=i2s=on/dtparam=i2s=on/g' /boot/config.txt
-grep -q "dtoverlay=rpi-rt5679-machine" /boot/config.txt || \
-	echo "dtoverlay=rpi-rt5679-machine" >> /boot/config.txt
+grep -q "dtoverlay=rpi-rt5677-machine" /boot/config.txt || \
+	echo "dtoverlay=rpi-rt5677-machine" >> /boot/config.txt
 
 echo "------------------------------------------------------"
 echo "Please reboot your raspberry pi to apply all settings"

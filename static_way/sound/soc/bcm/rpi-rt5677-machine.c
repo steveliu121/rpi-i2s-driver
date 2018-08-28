@@ -1,5 +1,5 @@
 /*
- * ASoC driver for PROTO AudioCODEC (with a RT5679)
+ * ASoC driver for PROTO AudioCODEC (with a RT5677)
  * connected to a Raspberry Pi
  *
  * Author:      Steve Liu, <steveliu121@163.com>
@@ -19,15 +19,15 @@
 #include <sound/jack.h>
 
 
-#define RT5679_SCLK_S_MCLK	0
+#define RT5677_SCLK_S_MCLK	0
 
-static const unsigned int rt5679_rates_24576000[] = {
+static const unsigned int rt5677_rates_24576000[] = {
 	8000, 32000, 48000, 96000,
 };
 
-static struct snd_pcm_hw_constraint_list rt5679_constraints_24576000 = {
-	.list = rt5679_rates_24576000,
-	.count = ARRAY_SIZE(rt5679_rates_24576000),
+static struct snd_pcm_hw_constraint_list rt5677_constraints_24576000 = {
+	.list = rt5677_rates_24576000,
+	.count = ARRAY_SIZE(rt5677_rates_24576000),
 };
 
 static int snd_rpi_proto_startup(struct snd_pcm_substream *substream)
@@ -35,7 +35,7 @@ static int snd_rpi_proto_startup(struct snd_pcm_substream *substream)
 	/* Setup constraints, because there is a 24.576 MHz XTAL on the board */
 	snd_pcm_hw_constraint_list(substream->runtime, 0,
 				SNDRV_PCM_HW_PARAM_RATE,
-				&rt5679_constraints_24576000);
+				&rt5677_constraints_24576000);
 	return 0;
 }
 
@@ -55,7 +55,7 @@ static int snd_rpi_proto_hw_params(struct snd_pcm_substream *substream,
 				| SND_SOC_DAIFMT_CBS_CFS);
 	if (ret < 0) {
 		dev_err(codec->dev,
-				"Failed to set RT5679 DAI fmt\n");
+				"Failed to set RT5677 DAI fmt\n");
 		return ret;
 	}
 
@@ -65,7 +65,7 @@ static int snd_rpi_proto_hw_params(struct snd_pcm_substream *substream,
 				| SND_SOC_DAIFMT_CBS_CFS);
 	if (ret < 0) {
 		dev_err(codec->dev,
-				"Failed to set RT5679 DAI fmt\n");
+				"Failed to set RT5677 DAI fmt\n");
 		return ret;
 	}
 
@@ -78,11 +78,11 @@ static int snd_rpi_proto_hw_params(struct snd_pcm_substream *substream,
 	}
 
 	/* Set codec_dai sysclk */
-	ret = snd_soc_dai_set_sysclk(codec_dai, RT5679_SCLK_S_MCLK,
+	ret = snd_soc_dai_set_sysclk(codec_dai, RT5677_SCLK_S_MCLK,
 			sysclk, 0);/*actually, only the first to params works*/
 	if (ret < 0) {
 		dev_err(codec->dev,
-				"Failed to set RT5679 SYSCLK: %d\n", ret);
+				"Failed to set RT5677 SYSCLK: %d\n", ret);
 		return ret;
 	}
 
@@ -112,7 +112,7 @@ static struct snd_soc_dai_link snd_rpi_proto_dai[] = {
 
 /* audio machine driver */
 static struct snd_soc_card snd_rpi_proto = {
-	.name		= "snd_rpi_rt5679_machine",
+	.name		= "snd_rpi_rt5677_machine",
 	.owner		= THIS_MODULE,
 	.dai_link	= snd_rpi_proto_dai,
 	.num_links	= ARRAY_SIZE(snd_rpi_proto_dai),
@@ -122,7 +122,7 @@ static int snd_rpi_proto_probe(struct platform_device *pdev)
 {
 	int ret = 0;
 
-	printk("~~~~~~~~~~~rt5679 machine driver match\n");
+	printk("~~~~~~~~~~~rt5677 machine driver match\n");
 
 
 	snd_rpi_proto.dev = &pdev->dev;
@@ -156,14 +156,14 @@ static int snd_rpi_proto_remove(struct platform_device *pdev)
 }
 
 static const struct of_device_id snd_rpi_proto_of_match[] = {
-	{ .compatible = "rpi,rpi-rt5679-machine", },
+	{ .compatible = "rpi,rpi-rt5677-machine", },
 	{},
 };
 MODULE_DEVICE_TABLE(of, snd_rpi_proto_of_match);
 
 static struct platform_driver snd_rpi_proto_driver = {
 	.driver = {
-		.name   = "snd-rpi-rt5679-machine",
+		.name   = "snd-rpi-rt5677-machine",
 		.owner  = THIS_MODULE,
 		.of_match_table = snd_rpi_proto_of_match,
 	},
@@ -174,5 +174,5 @@ static struct platform_driver snd_rpi_proto_driver = {
 module_platform_driver(snd_rpi_proto_driver);
 
 MODULE_AUTHOR("Steve Liu");
-MODULE_DESCRIPTION("ASoC Driver for Raspberry Pi connected to PROTO board (RT5679)");
+MODULE_DESCRIPTION("ASoC Driver for Raspberry Pi connected to PROTO board (RT5677)");
 MODULE_LICENSE("GPL");

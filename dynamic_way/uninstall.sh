@@ -33,18 +33,18 @@ echo "------------------------------------------------------"
 echo "unset kernel modules"
 echo "------------------------------------------------------"
 sed -i '/snd-soc-rt5677/d' /etc/modules
-sed -i '/snd-soc-rpi-rt5679-machine/d' /etc/modules
+sed -i '/snd-soc-rpi-rt5677-machine/d' /etc/modules
 
 echo "------------------------------------------------------"
 echo "remove dtbos"
 echo "------------------------------------------------------"
-rm  /boot/overlays/rpi-rt5679-machine.dtbo
+rm  /boot/overlays/rpi-rt5677-machine.dtbo
 
 echo "------------------------------------------------------"
 echo "unset droverlays"
 echo "------------------------------------------------------"
 sed -i 's/dtparam=i2s=on/#dtparam=i2s=on/g' /boot/config.txt
-sed -i '/dtoverlay=rpi-rt5679-machine/d' /boot/config.txt
+sed -i '/dtoverlay=rpi-rt5677-machine/d' /boot/config.txt
 
 echo "------------------------------------------------------"
 echo "Please reboot your raspberry pi to apply all settings"

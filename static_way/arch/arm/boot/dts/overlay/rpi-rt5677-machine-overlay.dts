@@ -31,7 +31,7 @@
 	fragment@2 {
 		target = <&sound>;
 		__overlay__ {
-			compatible = "rpi,rpi-rt5679-machine";
+			compatible = "rpi,rpi-rt5677-machine";
 			i2s-controller = <&i2s>;
 			status = "okay";
 		};
